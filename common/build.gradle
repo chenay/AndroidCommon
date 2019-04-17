@@ -93,8 +93,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
     api 'android.arch.persistence.room:rxjava2:1.1.1'
     api 'android.arch.persistence.room:testing:1.1.1'
-    //layout
-    implementation 'de.halfbit:pinned-section-listview:1.0.0'
     //fresco
     api 'com.facebook.fresco:fresco:1.5.0'
     api 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
