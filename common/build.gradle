@@ -81,6 +81,7 @@ dependencies {
     //aRouter
     implementation 'com.alibaba:arouter-api:1.4.1'
     annotationProcessor "com.alibaba:arouter-compiler:1.2.2"
+    annotationProcessor "com.alibaba:arouter-compiler:1.2.2"
     //log
     api 'com.apkfuns.logutils:library:1.5.1.1'
     //lifecycle
