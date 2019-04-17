@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <!--圆角-->
+            <corners
+                android:radius="2dp"/><!-- 设置圆角半径 -->
+
+            <!-- 填充 -->
+            <solid
+                android:color="#179fd1"/><!-- 填充的颜色 -->
+            <!-- 描边 -->
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#1ab9f1"
+                android:dashGap="0dp"
+                android:dashWidth="0dp"/>
+        </shape>
+    </item>
+    <item android:state_selected="true">
+        <shape>
+            <corners
+                android:radius="2dp"/><!-- 设置圆角半径 -->
+            <!-- 填充 -->
+            <solid
+                android:color="#179fd1"/><!-- 填充的颜色 -->
+            <!-- 描边 -->
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#1ab9f1"
+                android:dashGap="0dp"
+                android:dashWidth="0dp"/>
+        </shape>
+    </item>
+    <item android:state_enabled="true">
+        <shape>
+            <!--圆角-->
+            <corners
+                android:radius="2dp"
+                /><!-- 设置圆角半径 -->
+            <!-- 填充 -->
+            <solid
+                android:color="#1ab9f1"/><!-- 填充的颜色 -->
+
+            <!-- 描边 -->
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#1ab9f1"
+                android:dashGap="0dp"
+                android:dashWidth="0dp"/>
+        </shape>
+
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+
+            <!--圆角-->
+            <corners
+                android:radius="2dp"/><!-- 设置圆角半径 -->
+
+            <!-- 填充 -->
+            <solid
+                android:color="#cccccc"/><!-- 填充的颜色 -->
+
+            <!-- 描边 -->
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#cccccc"
+                android:dashGap="0dp"
+                android:dashWidth="0dp"/>
+        </shape>
+
+    </item>
+</selector>
