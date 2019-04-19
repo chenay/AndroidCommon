@@ -10,6 +10,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectStreamException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -41,58 +42,74 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtils {
 
-    private static final OkHttpClient client = new OkHttpClient.Builder().
-            connectTimeout(60, TimeUnit.SECONDS).
-            readTimeout(30, TimeUnit.SECONDS).
-            writeTimeout(30, TimeUnit.SECONDS)
-            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory()) //忽略证书
-            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//
-            .build();
+    private OkHttpClient.Builder clientBuilder;
+    private Retrofit.Builder builder;
+
+    public void setClientBuilder(OkHttpClient.Builder clientBuilder) {
+        this.clientBuilder = clientBuilder;
+    }
 
     @NonNull
-    public static Retrofit.Builder getRetrofitBulie(@NonNull String head, @NonNull String serverIP, @NonNull String serverPort) {
+    public Retrofit.Builder getBuilder() {
+        return builder;
+    }
+
+    public void setBuilder(Retrofit.Builder builder) {
+        this.builder = builder;
+    }
+
+    public RetrofitUtils() {
+        initClient();
+    }
+
+    private void initClient() {
+        clientBuilder = new OkHttpClient.Builder().
+                connectTimeout(60, TimeUnit.SECONDS).
+                readTimeout(30, TimeUnit.SECONDS).
+                writeTimeout(30, TimeUnit.SECONDS)
+                //忽略证书
+                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
+                .hostnameVerifier(SSLSocketClient.getHostnameVerifier());
+    }
 
 
+    @NonNull
+    private Retrofit.Builder getRetrofitBulie(@NonNull String serverIP, @NonNull String serverPort) {
         final Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(head + serverIP + ":" + serverPort)
-                .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(IGsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+                .baseUrl(serverIP + ":" + serverPort);
+        this.builder = builder;
         return builder;
 
     }
 
     @NonNull
-    public static Retrofit getRetrofit(@NonNull String serverIP, @NonNull String serverPort, InputStream[] inputStream) {
-        //校验证书
-//        setCertificates(clientBuilder, inputStream);
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(serverIP + ":" + serverPort)
-                .client(client)
-//                    .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(IGsonConverterFactory.create()) //数据加密
+    public Retrofit getRetrofit(@NonNull String serverIP, @NonNull String serverPort, InputStream[] inputStream) {
+        if (inputStream != null && inputStream.length > 0) {
+            //校验证书
+            setCertificates(clientBuilder, inputStream);
+        }
+        return getRetrofitBulie(serverIP, serverPort)
+                .client(clientBuilder.build())
+                //数据加密
+                .addConverterFactory(IGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
-        return build;
     }
 
     @NonNull
-    public static Retrofit getRetrofitNoEncrypt(@NonNull String serverIP, @NonNull String serverPort, InputStream[] inputStream) {
-        //校验证书
-//        setCertificates(clientBuilder, inputStream);
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(serverIP + ":" + serverPort)
-                .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(IGsonConverterFactory.create()) //数据加密
+    public Retrofit getRetrofitNoEncrypt(@NonNull String serverIP, @NonNull String serverPort, InputStream[] inputStream) {
+        if (inputStream != null && inputStream.length > 0) {
+            //校验证书
+            setCertificates(clientBuilder, inputStream);
+        }
+        return getRetrofitBulie(serverIP, serverPort)
+                .client(clientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
-        return build;
     }
 
-    public static SSLSocketFactory getSSLSocketFactory(Context context, int[] certificates) {
+    public SSLSocketFactory getSSLSocketFactory(Context context, int[] certificates) {
 
         if (context == null) {
             throw new NullPointerException("context == null");
@@ -130,7 +147,7 @@ public class RetrofitUtils {
      * @param clientBuilder OKhttpClient.builder
      * @param certificates  读取证书的InputStream
      */
-    public static void setCertificates(OkHttpClient.Builder clientBuilder, InputStream... certificates) {
+    public void setCertificates(OkHttpClient.Builder clientBuilder, InputStream... certificates) {
         try {
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -185,30 +202,28 @@ public class RetrofitUtils {
 //                .build();
 //    }
 
-    public static Retrofit getRetrofit_b(@NonNull String head, @NonNull String serverIP, @NonNull String serverPort) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.interceptors().add(new ReadCookiesInterceptor());
-        okHttpClient.interceptors().add(new SaveCookiesInterceptor());
+    public Retrofit getRetrofit_b(@NonNull String serverIP, @NonNull String serverPort) {
 
-        return new Retrofit.Builder()
-                .baseUrl(head + serverIP + ":" + serverPort)
+        clientBuilder.interceptors().add(new ReadCookiesInterceptor());
+        clientBuilder.interceptors().add(new SaveCookiesInterceptor());
+
+        return getRetrofitBulie(serverIP, serverPort)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
+                .client(clientBuilder.build())
                 .build();
     }
 
-    public static Retrofit getRetrofit1(@NonNull String head, @NonNull String serverIP, @NonNull String serverPort) {
+    public Retrofit getRetrofit1(@NonNull String serverIP, @NonNull String serverPort) {
 //        SLSocketFactory sslSocketFactory =getSSLSocketFactory_Certificate(context,"BKS", R.raw.XXX);
-        OkHttpClient.Builder client = new OkHttpClient.Builder()
-                .certificatePinner(new CertificatePinner.Builder()
-                        .add("YOU API.com", "sha1/DmxUShsZuNiqPQsX2Oi9uv2sCnw=")
-                        .add("YOU API..com", "sha1/SXxoaOSEzPC6BgGmxAt/EAcsajw=")
-                        .add("YOU API..com", "sha1/blhOM3W9V/bVQhsWAcLYwPU6n24=")
-                        .add("YOU API..com", "sha1/T5x9IXmcrQ7YuQxXnxoCmeeQ84c=")
-                        .build());
-        return new Retrofit.Builder()
-                .baseUrl(head + serverIP + ":" + serverPort)
+
+        clientBuilder.certificatePinner(new CertificatePinner.Builder()
+                .add("YOU API.com", "sha1/DmxUShsZuNiqPQsX2Oi9uv2sCnw=")
+                .add("YOU API..com", "sha1/SXxoaOSEzPC6BgGmxAt/EAcsajw=")
+                .add("YOU API..com", "sha1/blhOM3W9V/bVQhsWAcLYwPU6n24=")
+                .add("YOU API..com", "sha1/T5x9IXmcrQ7YuQxXnxoCmeeQ84c=")
+                .build());
+        return getRetrofitBulie(serverIP, serverPort)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 //                //开启请求头
@@ -237,5 +252,33 @@ public class RetrofitUtils {
 //                        }))
                 .build();
 
+    }
+
+
+    /**
+     * 获取单例内部类句柄
+     *
+     * @return Created by Chenay
+     */
+    private static class RetrofitUtilsHolder {
+        private static final RetrofitUtils SINGLETON = new RetrofitUtils();
+    }
+
+    /**
+     * 获取单例
+     *
+     * @return Created by Chenay
+     */
+    public static RetrofitUtils newInstance() {
+        return RetrofitUtilsHolder.SINGLETON;
+    }
+
+    /**
+     * 防止反序列化操作破坏单例模式 (条件) implements Serializable
+     *
+     * @return Created by Chenay
+     */
+    private Object readResolve() throws ObjectStreamException {
+        return RetrofitUtilsHolder.SINGLETON;
     }
 }

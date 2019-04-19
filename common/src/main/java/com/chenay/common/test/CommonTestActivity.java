@@ -12,4 +12,6 @@ public class CommonTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_test);
     }
+
+
 }
