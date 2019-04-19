@@ -49,6 +49,10 @@ public class RetrofitUtils {
         this.clientBuilder = clientBuilder;
     }
 
+    public OkHttpClient.Builder getClientBuilder() {
+        return clientBuilder;
+    }
+
     @NonNull
     public Retrofit.Builder getBuilder() {
         return builder;
