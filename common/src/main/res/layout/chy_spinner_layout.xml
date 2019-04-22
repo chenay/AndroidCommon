@@ -3,14 +3,14 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/chy_spinner_"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:orientation="horizontal">
 
     <TextView
         android:id="@+id/chy_spinner_hint"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="@dimen/sp_17"/>
 
@@ -18,7 +18,7 @@
     <LinearLayout
         android:id="@+id/chy_spinner_show"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_white_gray"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/chy_spinner_content"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="4"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/dp_8"
@@ -36,10 +36,10 @@
 
         <ImageView
             android:id="@+id/chy_spinner_img"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_expand_more_black"/>
+            android:src="@drawable/ic_down"/>
     </LinearLayout>
 
 </LinearLayout>

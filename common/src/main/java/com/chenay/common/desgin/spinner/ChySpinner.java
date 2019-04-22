@@ -90,7 +90,7 @@ public class ChySpinner extends LinearLayout implements View.OnClickListener, Po
             spinnerPopup = new SpinnerPopup((v.getContext()));
             spinnerPopup.setOnDismissListener(this);
             spinnerPopup.setWidth_H(v.getMeasuredWidth(), (int) expandHeight);
-            mchy_spinner_img.setImageResource(R.drawable.ic_expand_less_black);
+            mchy_spinner_img.setImageResource(R.drawable.ic_up);
 
             spinnerPopup.showAsDropDown(v);
             if (mChySpinnerCallBack != null) {
@@ -106,7 +106,7 @@ public class ChySpinner extends LinearLayout implements View.OnClickListener, Po
         spinnerPopup = new SpinnerPopup(mchy_spinner_show.getContext());
         spinnerPopup.setOnDismissListener(this);
         spinnerPopup.setWidth_H(mchy_spinner_show.getMeasuredWidth(), (int) expandHeight);
-        mchy_spinner_img.setImageResource(R.drawable.ic_expand_less_black);
+        mchy_spinner_img.setImageResource(R.drawable.ic_up);
         spinnerPopup.showAsDropDown(mchy_spinner_show);
         if (mChySpinnerCallBack != null) {
             mChySpinnerCallBack.choosing(this);
@@ -164,7 +164,7 @@ public class ChySpinner extends LinearLayout implements View.OnClickListener, Po
 
     @Override
     public void onDismiss() {
-        mchy_spinner_img.setImageResource(R.drawable.ic_expand_more_black);
+        mchy_spinner_img.setImageResource(R.drawable.ic_down);
         if (list != null) {
             list.clear();
             list = null;
