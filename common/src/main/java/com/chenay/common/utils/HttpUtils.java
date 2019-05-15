@@ -3,6 +3,7 @@ package com.chenay.common.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.chenay.common.retrofit.SSLSocketClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.ResponseHandlerInterface;
 
@@ -22,6 +23,9 @@ import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import cz.msebera.android.httpclient.HttpStatus;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class HttpUtils {
@@ -57,6 +61,89 @@ public class HttpUtils {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // 获取响应的输入流对象
                 InputStream is = conn.getInputStream();
+                // 创建字节输出流对象
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                // 定义读取的长度
+                int len = 0;
+                // 定义缓冲区
+                byte buffer[] = new byte[1024];
+                // 按照缓冲区的大小，循环读取
+                while ((len = is.read(buffer)) != -1) {
+                    // 根据读取的长度写入到os对象中
+                    baos.write(buffer, 0, len);
+                }
+                // 释放资源
+                is.close();
+                baos.close();
+                result = new String(baos.toByteArray());
+            } else {
+                ioException = new IOException("HTTP: " + conn.getResponseMessage());
+            }
+        } catch (IOException e) {
+            ioException = new IOException(e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+            if (ioException != null) {
+                throw ioException;
+            }
+        }
+        return result;
+    }
+
+    public static String httpsPost(String uri, String data) throws IOException {
+        String result = null;
+        HttpsURLConnection conn = null;
+        IOException ioException = null;
+        try {
+            URL url = new URL(uri);
+            String content = data;
+
+            conn = (HttpsURLConnection) url.openConnection();
+            conn.setConnectTimeout(60 * 1000);
+            conn.setRequestMethod("POST");
+            conn.setSSLSocketFactory(SSLSocketClient.getSSLSocketFactoryAll());
+            conn.setHostnameVerifier(SSLSocketClient.getHostnameVerifier());
+            conn.setRequestProperty("Accept-Language", "zh-CN");
+            conn.setRequestProperty("Charset", "UTF-8");
+            // 设置请求的头
+            conn.setRequestProperty("Connection", "keep-alive");
+//                // 设置请求的头
+//            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Content-Type", "text/html");
+//                // 设置请求的头
+            conn.setRequestProperty("Content-Length",
+                    String.valueOf(content.getBytes().length));
+            conn.setDoOutput(true); // 发送POST请求必须设置允许输出
+            conn.setDoInput(true); // 发送POST请求必须设置允许输入
+            conn.connect();
+            OutputStream os = conn.getOutputStream();
+            os.write(content.getBytes("utf-8"));
+            os.close();
+            printResponseHeader(conn);
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // 获取响应的输入流对象
+                InputStream is = conn.getInputStream();
+                // 创建字节输出流对象
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                // 定义读取的长度
+                int len = 0;
+                // 定义缓冲区
+                byte buffer[] = new byte[1024];
+                // 按照缓冲区的大小，循环读取
+                while ((len = is.read(buffer)) != -1) {
+                    // 根据读取的长度写入到os对象中
+                    baos.write(buffer, 0, len);
+                }
+                // 释放资源
+                is.close();
+                baos.close();
+                result = new String(baos.toByteArray());
+            } else if (responseCode >= HttpStatus.SC_BAD_REQUEST) {
+                // 获取响应的输入流对象
+                InputStream is = conn.getErrorStream();
                 // 创建字节输出流对象
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 // 定义读取的长度
@@ -134,60 +221,60 @@ public class HttpUtils {
         InputStream is = null;
         HttpURLConnection conn = null;
         // 当存放文件的文件目录不存在的时候创建文件目录
-            URL url = new URL(httpUrl);
-            try {
-                conn = (HttpURLConnection) url.openConnection();
-                is = conn.getInputStream();// 获得http请求返回的InputStream对象。
-                fos = new FileOutputStream(file);// 获得文件输出流对象来写文件用的
-                byte[] buf = new byte[1024];
-                conn.connect();// http请求服务器
-                double count = 0;
-                // http请求取得响应的时候
-                if (conn.getResponseCode() == 200) {
-                    while (true) {
-                        if (is != null) {
-                            int numRead = is.read(buf);
-                            if (numRead <= 0) {
-                                break;
-                            } else {
-                                fos.write(buf, 0, numRead);
-                            }
-                        } else {
+        URL url = new URL(httpUrl);
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+            is = conn.getInputStream();// 获得http请求返回的InputStream对象。
+            fos = new FileOutputStream(file);// 获得文件输出流对象来写文件用的
+            byte[] buf = new byte[1024];
+            conn.connect();// http请求服务器
+            double count = 0;
+            // http请求取得响应的时候
+            if (conn.getResponseCode() == 200) {
+                while (true) {
+                    if (is != null) {
+                        int numRead = is.read(buf);
+                        if (numRead <= 0) {
                             break;
+                        } else {
+                            fos.write(buf, 0, numRead);
                         }
+                    } else {
+                        break;
                     }
-                } else {
-                    System.out.println("nono");
-                    return null;
                 }
-                conn.disconnect();
-                fos.close();
-                if (is != null) {
-                    is.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                System.out.println("nono");
                 return null;
-            } finally {
-                if (conn != null) {
-                    conn.disconnect();
-                    conn = null;
-                }
-                if (fos != null) {
-                    try {
-                        fos.close();
-                        fos = null;
-                    } catch (IOException e) {
-                    }
-                }
-                if (is != null) {
-                    try {
-                        is.close();
-                        is = null;
-                    } catch (IOException e) {
-                    }
+            }
+            conn.disconnect();
+            fos.close();
+            if (is != null) {
+                is.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+                conn = null;
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                    fos = null;
+                } catch (IOException e) {
                 }
             }
+            if (is != null) {
+                try {
+                    is.close();
+                    is = null;
+                } catch (IOException e) {
+                }
+            }
+        }
         return filePath;
     }
 
