@@ -1,5 +1,4 @@
-package com.chenay.qrlib;
-
+package com.chenay.common.utils;
 
 import android.graphics.Bitmap;
 

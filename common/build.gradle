@@ -1,5 +1,5 @@
 //apply plugin: 'com.android.application'
-//apply plugin: 'com.android.library'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
@@ -131,5 +131,4 @@ dependencies {
     //    // 2019-04-16 Support encryption key 16 bit zero padding
 
     //    implementation  'org.apache.commons:commons-lang3:3.4'
-    implementation project(':qrlib')
 }

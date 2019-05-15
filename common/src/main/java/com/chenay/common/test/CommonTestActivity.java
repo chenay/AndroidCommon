@@ -1,8 +1,8 @@
 package com.chenay.common.test;
 
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,12 +15,9 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.oned.Code128Writer;
-import com.google.zxing.oned.OneDimensionalCodeWriter;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.Hashtable;
-
-import okhttp3.internal.Util;
 
 public class CommonTestActivity extends AppCompatActivity {
 
