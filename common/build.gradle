@@ -1,5 +1,5 @@
-apply plugin: 'com.android.application'
-//apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
@@ -7,7 +7,7 @@ android {
         enabled true
     }
     defaultConfig {
-        applicationId "com.chenay.common"
+//        applicationId "com.chenay.common"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
