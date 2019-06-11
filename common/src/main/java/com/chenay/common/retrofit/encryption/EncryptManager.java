@@ -1,5 +1,6 @@
 package com.chenay.common.retrofit.encryption;
 
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
@@ -19,6 +20,10 @@ public class EncryptManager {
      */
     private boolean isEncrypt = true;
     private static final String CHARSET_NAME = "utf-8";
+    /* 加密使用的 key */
+    private static String AES_KEY = "";
+    /* 加密使用的 IV */
+    private static String AES_IV = "";
 
     /**
      * 获取单例内部类句柄
@@ -28,6 +33,7 @@ public class EncryptManager {
     private static class EncryptManagerHolder {
         private static final EncryptManager SINGLETON = new EncryptManager();
     }
+
 
     /**
      * 获取单例
@@ -47,6 +53,14 @@ public class EncryptManager {
         return EncryptManagerHolder.SINGLETON;
     }
 
+    public EncryptManager() {
+
+    }
+
+    public void init(String key, String iv) {
+        AES_KEY = key;
+        AES_IV = iv;
+    }
 
     /**
      * 加密
@@ -61,7 +75,6 @@ public class EncryptManager {
         if (isDebug()) {
             Log.d(TAG, "convert: 加密前:" + msg);
         }
-
         // byte[] temp1 = CodeUtils.xorEncode(str.getBytes(Charset.defaultCharset()));
         // msg = new String(temp1);
 
@@ -74,10 +87,8 @@ public class EncryptManager {
         // EncryptUtil.KEY_BYTES);
         try {
             byte[] temp1;
-            temp1 = EncryptUtil.encryptAES(msg.getBytes(CHARSET_NAME),
-                    EncryptUtil.AES_KEY.getBytes(CHARSET_NAME));
+            temp1 = encrypt(msg.getBytes(CHARSET_NAME));
             msg = Base64.encodeToString(temp1, Base64.DEFAULT);
-
             if (isDebug()) {
                 Log.d(TAG, "convert: 加密后:" + msg);
             }
@@ -86,6 +97,16 @@ public class EncryptManager {
         }
 
         return msg;
+    }
+
+    private byte[] encrypt(byte[] bytes) throws UnsupportedEncodingException {
+        if (TextUtils.isEmpty(AES_KEY) || TextUtils.isEmpty(AES_IV)) {
+            throw new NumberFormatException("请在application中调用EncryptManager.newInstance().init()");
+        }
+        byte[] temp1;
+        temp1 = EncryptUtil.encryptAES(bytes,
+                AES_KEY.getBytes(CHARSET_NAME), AES_IV.getBytes());
+        return temp1;
     }
 
     /**
@@ -99,7 +120,11 @@ public class EncryptManager {
             return msg;
         }
         try {
-            byte[] temp1 = decryptByte(msg);
+            if (isDebug()) {
+                Log.d(TAG, "convert: 解密前:" + msg);
+            }
+            final byte[] bytes = Base64.decode(msg, Base64.DEFAULT);
+            byte[] temp1 = decryptByte(bytes);
             msg = new String(temp1, CHARSET_NAME);
             if (isDebug()) {
                 Log.d(TAG, "convert: 解密后:" + msg);
@@ -113,18 +138,16 @@ public class EncryptManager {
     /**
      * 解密
      *
-     * @param msg
+     * @param bytes
      * @return
      */
-    private byte[] decryptByte(String msg) throws UnsupportedEncodingException {
-        if (isDebug()) {
-            Log.d(TAG, "convert: 解密前:" + msg);
+    public byte[] decryptByte(byte[] bytes) throws UnsupportedEncodingException {
+        if (TextUtils.isEmpty(AES_KEY) || TextUtils.isEmpty(AES_IV)) {
+            throw new NumberFormatException("请在application中调用EncryptManager.newInstance().init()");
         }
-        final byte[] bytes = Base64.decode(msg, Base64.DEFAULT);
         // byte[] temp1 = EncryptUtil.decryptDES(bytes,EncryptUtil.KEY_BYTES);
-
         byte[] temp1 = EncryptUtil.decryptAES(bytes,
-                EncryptUtil.AES_KEY.getBytes(CHARSET_NAME));
+                AES_KEY.getBytes(CHARSET_NAME), AES_IV.getBytes());
         return temp1;
 
     }
