@@ -2,7 +2,10 @@ package com.chenay.common.retrofit.encryption;
 
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
+
+import com.alibaba.android.arouter.facade.template.ILogger;
+
+import com.alibaba.android.arouter.utils.DefaultLogger;
 
 import java.io.ObjectStreamException;
 import java.io.UnsupportedEncodingException;
@@ -11,14 +14,13 @@ import java.io.UnsupportedEncodingException;
  * @author Y.Chen5
  */
 public class EncryptManager {
-
-    private boolean debug = false;
-
     private static final String TAG = "EncryptManager";
+    private static ILogger logger = new DefaultLogger(TAG);
+    private static boolean debug = false;
     /**
      * 是否加密
      */
-    private boolean isEncrypt = true;
+    private static boolean isEncrypt = true;
     private static final String CHARSET_NAME = "utf-8";
     /* 加密使用的 key */
     private static String AES_KEY = "";
@@ -62,6 +64,19 @@ public class EncryptManager {
         AES_IV = iv;
     }
 
+    public static synchronized void openDebug() {
+        debug = true;
+    }
+
+    public static synchronized void openLog() {
+        logger.showLog(true);
+        logger.info(TAG, "打开日志!");
+    }
+
+    public static synchronized void openEncryp() {
+        isEncrypt = true;
+    }
+
     /**
      * 加密
      *
@@ -73,7 +88,7 @@ public class EncryptManager {
             return msg;
         }
         if (isDebug()) {
-            Log.d(TAG, "convert: 加密前:" + msg);
+            logger.debug(TAG, "convert: 加密前:" + msg);
         }
         // byte[] temp1 = CodeUtils.xorEncode(str.getBytes(Charset.defaultCharset()));
         // msg = new String(temp1);
@@ -90,7 +105,7 @@ public class EncryptManager {
             temp1 = encrypt(msg.getBytes(CHARSET_NAME));
             msg = Base64.encodeToString(temp1, Base64.DEFAULT);
             if (isDebug()) {
-                Log.d(TAG, "convert: 加密后:" + msg);
+                logger.debug(TAG, "convert: 加密后:" + msg);
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -121,13 +136,13 @@ public class EncryptManager {
         }
         try {
             if (isDebug()) {
-                Log.d(TAG, "convert: 解密前:" + msg);
+                logger.debug(TAG, "convert: 解密前:" + msg);
             }
             final byte[] bytes = Base64.decode(msg, Base64.DEFAULT);
             byte[] temp1 = decryptByte(bytes);
             msg = new String(temp1, CHARSET_NAME);
             if (isDebug()) {
-                Log.d(TAG, "convert: 解密后:" + msg);
+                logger.debug(TAG, "convert: 解密后:" + msg);
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -156,15 +171,9 @@ public class EncryptManager {
         return debug;
     }
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
 
     public boolean isEncrypt() {
         return isEncrypt;
     }
 
-    public void setEncrypt(boolean encrypt) {
-        isEncrypt = encrypt;
-    }
 }
