@@ -1,16 +1,23 @@
 package com.chenay.common.retrofit.encryption;
 
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ObjectStreamException;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * @author Y.Chen5
+ */
 public class EncryptManager {
+
+    private boolean debug = false;
+
     private static final String TAG = "EncryptManager";
     /**
      * 是否加密
      */
-    private static final boolean isEncrypt = true;
+    private boolean isEncrypt = true;
     private static final String CHARSET_NAME = "utf-8";
 
     /**
@@ -51,7 +58,9 @@ public class EncryptManager {
         if (!isEncrypt) {
             return msg;
         }
-//        Log.d(TAG, "convert: 加密前:" + msg);
+        if (isDebug()) {
+            Log.d(TAG, "convert: 加密前:" + msg);
+        }
 
         // byte[] temp1 = CodeUtils.xorEncode(str.getBytes(Charset.defaultCharset()));
         // msg = new String(temp1);
@@ -68,7 +77,10 @@ public class EncryptManager {
             temp1 = EncryptUtil.encryptAES(msg.getBytes(CHARSET_NAME),
                     EncryptUtil.AES_KEY.getBytes(CHARSET_NAME));
             msg = Base64.encodeToString(temp1, Base64.DEFAULT);
-//		Log.d(TAG,"convert: 加密后:" + msg);
+
+            if (isDebug()) {
+                Log.d(TAG, "convert: 加密后:" + msg);
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -89,7 +101,9 @@ public class EncryptManager {
         try {
             byte[] temp1 = decryptByte(msg);
             msg = new String(temp1, CHARSET_NAME);
-//            Log.d(TAG, "convert: 解密后:" + msg);
+            if (isDebug()) {
+                Log.d(TAG, "convert: 解密后:" + msg);
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -103,7 +117,9 @@ public class EncryptManager {
      * @return
      */
     private byte[] decryptByte(String msg) throws UnsupportedEncodingException {
-//		Log.d(TAG,"convert: 解密前:" + msg);
+        if (isDebug()) {
+            Log.d(TAG, "convert: 解密前:" + msg);
+        }
         final byte[] bytes = Base64.decode(msg, Base64.DEFAULT);
         // byte[] temp1 = EncryptUtil.decryptDES(bytes,EncryptUtil.KEY_BYTES);
 
@@ -111,5 +127,21 @@ public class EncryptManager {
                 EncryptUtil.AES_KEY.getBytes(CHARSET_NAME));
         return temp1;
 
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public boolean isEncrypt() {
+        return isEncrypt;
+    }
+
+    public void setEncrypt(boolean encrypt) {
+        isEncrypt = encrypt;
     }
 }
