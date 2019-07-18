@@ -40,8 +40,9 @@ public abstract class LazyLoadFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
-        Log.d(TAG, getClass().getSimpleName() + " setUserVisibleHint: "+ isVisibleToUser);
+        Log.d(TAG, getClass().getSimpleName() + " setUserVisibleHint: " + isVisibleToUser);
         tryLoadData();
+        tryRecycleData();
     }
 
 
@@ -113,8 +114,18 @@ public abstract class LazyLoadFragment extends Fragment {
         }
     }
 
+    public void tryRecycleData() {
+        if (isViewCreated && !isVisibleToUser && isDataLoaded) {
+            onRecycleData();
+            isDataLoaded = false;
+            dispatchParentHiddenState();
+        }
+    }
+
+
     /**
      * show()、hide()场景下，当前fragment没隐藏，如果其子fragment也没隐藏，则尝试让子fragment请求数据
+     * 或者回收数据
      */
     private void dispatchParentHiddenState() {
         FragmentManager fragmentManager = getChildFragmentManager();
@@ -157,6 +168,7 @@ public abstract class LazyLoadFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        tryRecycleData();
         isViewCreated = false;
         isVisibleToUser = false;
         isDataLoaded = false;
@@ -172,6 +184,10 @@ public abstract class LazyLoadFragment extends Fragment {
      */
     public void onLoadData() {
         Log.d(TAG, getClass().getSimpleName() + " onLoadData: ");
+    }
+
+    public void onRecycleData() {
+        Log.d(TAG, getClass().getSimpleName() + " onRecycleData: ");
     }
 
     @Override
