@@ -168,9 +168,9 @@ public abstract class LazyLoadFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        isVisibleToUser = false;
         tryRecycleData();
         isViewCreated = false;
-        isVisibleToUser = false;
         isDataLoaded = false;
         isHidden = true;
         super.onDestroy();
