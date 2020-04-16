@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.chenay.common.BR;
 
+
 /**
  * @author Y.Chen5
  */

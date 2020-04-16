@@ -13,7 +13,7 @@ import java.util.List;
  * @date 12/28/2017
  */
 @Keep
-public class UpdateConfigBean extends BaseBean {
+public class UpdateConfigBean implements BaseBean {
 
 
     /**
