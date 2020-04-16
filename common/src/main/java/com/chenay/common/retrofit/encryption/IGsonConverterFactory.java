@@ -1,11 +1,19 @@
 package com.chenay.common.retrofit.encryption;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -23,8 +31,19 @@ public class IGsonConverterFactory extends Converter.Factory {
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
     public static IGsonConverterFactory create() {
+
+
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+            @Override
+            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                Instant instant = Instant.ofEpochMilli(json.getAsJsonPrimitive().getAsLong());
+                return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+            }
+        }).create();
+
         return create(new Gson());
     }
+
 
     /**
      * Create an instance using {@code gson} for conversion. Encoding to JSON and
