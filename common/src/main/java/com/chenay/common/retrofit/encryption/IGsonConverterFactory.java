@@ -33,13 +33,16 @@ public class IGsonConverterFactory extends Converter.Factory {
     public static IGsonConverterFactory create() {
 
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-            @Override
-            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-                Instant instant = Instant.ofEpochMilli(json.getAsJsonPrimitive().getAsLong());
-                return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-            }
-        }).create();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+                @Override
+                public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                    Instant instant = Instant.ofEpochMilli(json.getAsJsonPrimitive().getAsLong());
+                    return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+                }
+            }).create();
+            return create(gson);
+        }
 
         return create(new Gson());
     }
@@ -51,7 +54,9 @@ public class IGsonConverterFactory extends Converter.Factory {
      */
     @SuppressWarnings("ConstantConditions") // Guarding public API nullability.
     public static IGsonConverterFactory create(Gson gson) {
-        if (gson == null) throw new NullPointerException("gson == null");
+        if (gson == null) {
+            throw new NullPointerException("gson == null");
+        }
         return new IGsonConverterFactory(gson);
     }
 
