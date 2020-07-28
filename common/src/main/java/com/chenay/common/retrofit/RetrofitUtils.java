@@ -1,11 +1,13 @@
 package com.chenay.common.retrofit;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+
+import androidx.annotation.NonNull;
 
 import com.chenay.common.retrofit.cookie.b.ReadCookiesInterceptor;
 import com.chenay.common.retrofit.cookie.b.SaveCookiesInterceptor;
-import com.chenay.common.retrofit.encryption.IGsonConverterFactory;
+import com.chenay.common.retrofit.encryption.IGsonEncryptConverterFactory;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.gson.IGsonConverterFactory;
 
 
 /**
@@ -95,7 +97,7 @@ public class RetrofitUtils {
         return getRetrofitBulie(serverIP, serverPort)
                 .client(clientBuilder.build())
                 //数据加密
-                .addConverterFactory(IGsonConverterFactory.create())
+                .addConverterFactory(IGsonEncryptConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
@@ -108,7 +110,7 @@ public class RetrofitUtils {
         }
         return getRetrofitBulie(serverIP, serverPort)
                 .client(clientBuilder.build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(IGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
@@ -212,7 +214,7 @@ public class RetrofitUtils {
         clientBuilder.interceptors().add(new SaveCookiesInterceptor());
 
         return getRetrofitBulie(serverIP, serverPort)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(IGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(clientBuilder.build())
                 .build();
@@ -228,7 +230,7 @@ public class RetrofitUtils {
                 .add("YOU API..com", "sha1/T5x9IXmcrQ7YuQxXnxoCmeeQ84c=")
                 .build());
         return getRetrofitBulie(serverIP, serverPort)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(IGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 //                //开启请求头
 //                .client(new OkHttpClient().newBuilder().addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)))
