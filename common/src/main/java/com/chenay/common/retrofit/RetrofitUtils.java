@@ -3,7 +3,7 @@ package com.chenay.common.retrofit;
 import android.content.Context;
 
 
-import androidx.annotation.NonNull;
+
 
 import com.chenay.common.retrofit.cookie.b.ReadCookiesInterceptor;
 import com.chenay.common.retrofit.cookie.b.SaveCookiesInterceptor;
@@ -29,6 +29,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import io.reactivex.annotations.NonNull;
 import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
