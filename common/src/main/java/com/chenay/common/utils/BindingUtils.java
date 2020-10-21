@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.chenay.common.desgin.recycleView.OnItemClickListener;
-import com.facebook.drawee.view.SimpleDraweeView;
+//import com.facebook.drawee.view.SimpleDraweeView;
 
 
 /**
@@ -19,19 +19,19 @@ import com.facebook.drawee.view.SimpleDraweeView;
  */
 public class BindingUtils {
 private static final String TAG = "BindingUtils";
-    @BindingAdapter("image")
-    public static void loadImage(SimpleDraweeView image, String uri) {
-        if (image != null) {
-            image.setImageURI(uri);
-        }
-    }
-
-    @BindingAdapter("image")
-    public static void loadImage(SimpleDraweeView image, int id) {
-        if (image != null) {
-            image.setImageResource(id);
-        }
-    }
+//    @BindingAdapter("image")
+//    public static void loadImage(SimpleDraweeView image, String uri) {
+//        if (image != null) {
+//            image.setImageURI(uri);
+//        }
+//    }
+//
+//    @BindingAdapter("image")
+//    public static void loadImage(SimpleDraweeView image, int id) {
+//        if (image != null) {
+//            image.setImageResource(id);
+//        }
+//    }
 
     @BindingAdapter("onNavigationItemSelectedListener")
     public static void setOnNavigationItemSelectedListener(

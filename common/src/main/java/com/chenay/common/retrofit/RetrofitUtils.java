@@ -3,8 +3,6 @@ package com.chenay.common.retrofit;
 import android.content.Context;
 
 
-
-
 import com.chenay.common.retrofit.cookie.b.ReadCookiesInterceptor;
 import com.chenay.common.retrofit.cookie.b.SaveCookiesInterceptor;
 import com.chenay.common.retrofit.encryption.IGsonEncryptConverterFactory;
@@ -66,17 +64,23 @@ public class RetrofitUtils {
     }
 
     public RetrofitUtils() {
-        initClient();
     }
 
-    private void initClient() {
-        clientBuilder = new OkHttpClient.Builder().
-                connectTimeout(60, TimeUnit.SECONDS).
-                readTimeout(30, TimeUnit.SECONDS).
-                writeTimeout(30, TimeUnit.SECONDS)
-                //忽略证书
-                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
-                .hostnameVerifier(SSLSocketClient.getHostnameVerifier());
+    public void initClient() {
+        if (clientBuilder == null) {
+            clientBuilder = new OkHttpClient.Builder().
+                    connectTimeout(60, TimeUnit.SECONDS).
+                    readTimeout(30, TimeUnit.SECONDS).
+                    writeTimeout(30, TimeUnit.SECONDS);
+
+        }
+    }
+
+    public void ignoreCertificate(OkHttpClient.Builder clientBuilder) {
+        //忽略证书
+        clientBuilder.sslSocketFactory(SSLSocketClient.getSSLSocketFactory());
+        clientBuilder .hostnameVerifier(SSLSocketClient.getHostnameVerifier());
+
     }
 
 
@@ -91,6 +95,7 @@ public class RetrofitUtils {
 
     @NonNull
     public Retrofit getRetrofit(@NonNull String serverIP, @NonNull String serverPort, InputStream[] inputStream) {
+        initClient();
         if (inputStream != null && inputStream.length > 0) {
             //校验证书
             setCertificates(clientBuilder, inputStream);
@@ -105,6 +110,7 @@ public class RetrofitUtils {
 
     @NonNull
     public Retrofit getRetrofitNoEncrypt(@NonNull String serverIP, @NonNull String serverPort, InputStream[] inputStream) {
+        initClient();
         if (inputStream != null && inputStream.length > 0) {
             //校验证书
             setCertificates(clientBuilder, inputStream);
@@ -210,7 +216,7 @@ public class RetrofitUtils {
 //    }
 
     public Retrofit getRetrofit_b(@NonNull String serverIP, @NonNull String serverPort) {
-
+        initClient();
         clientBuilder.interceptors().add(new ReadCookiesInterceptor());
         clientBuilder.interceptors().add(new SaveCookiesInterceptor());
 
@@ -223,7 +229,7 @@ public class RetrofitUtils {
 
     public Retrofit getRetrofit1(@NonNull String serverIP, @NonNull String serverPort) {
 //        SLSocketFactory sslSocketFactory =getSSLSocketFactory_Certificate(context,"BKS", R.raw.XXX);
-
+        initClient();
         clientBuilder.certificatePinner(new CertificatePinner.Builder()
                 .add("YOU API.com", "sha1/DmxUShsZuNiqPQsX2Oi9uv2sCnw=")
                 .add("YOU API..com", "sha1/SXxoaOSEzPC6BgGmxAt/EAcsajw=")
