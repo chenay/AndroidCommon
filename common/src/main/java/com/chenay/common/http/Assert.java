@@ -136,13 +136,7 @@ public abstract class Assert {
         }
     }
 
-    /** @deprecated */
-    @Deprecated
-    public static void doesNotContain(@Nullable String textToSearch, String substring) {
-        doesNotContain(textToSearch, substring, () -> {
-            return "[Assertion failed] - this String argument must not contain the substring [" + substring + "]";
-        });
-    }
+
 
     public static void notEmpty(@Nullable Object[] array, String message) {
         if (ObjectUtils.isEmpty(array)) {

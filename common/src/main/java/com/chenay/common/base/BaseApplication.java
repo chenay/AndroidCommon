@@ -1,5 +1,6 @@
 package com.chenay.common.base;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
@@ -9,8 +10,7 @@ import com.chenay.common.storage.PreferenceUtil;
 import com.chenay.common.thread.ThreadPoolUtil;
 import com.chenay.common.utils.AlertMediaUtil;
 import com.chenay.common.utils.Utils;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
+
 
 /**
  *  要想使用BaseApplication，必须在组件中实现自己的Application，并且继承BaseApplication；
@@ -20,9 +20,10 @@ import com.squareup.leakcanary.RefWatcher;
  * @author Y.Chen5
  */
 public class BaseApplication extends Application {
-    private RefWatcher refWatcher;
+    @SuppressLint("StaticFieldLeak")
     public static Context context;
 
+    @SuppressLint("StaticFieldLeak")
     private static BaseApplication sInstance;
 //    private List<ApplicationDelegate> mAppDelegateList;
     public static final String ROOT_PACKAGE = "com.chenay.common";
@@ -57,18 +58,6 @@ public class BaseApplication extends Application {
 //        refWatcher = setupLeakCanary(base);
     }
 
-
-    private RefWatcher setupLeakCanary(Context context) {
-        if (LeakCanary.isInAnalyzerProcess(context)) {
-            return RefWatcher.DISABLED;
-        }
-        return LeakCanary.install((Application) context);
-    }
-
-    public static RefWatcher getRefWatcher(Context context) {
-        BaseApplication leakApplication = (BaseApplication) context.getApplicationContext();
-        return leakApplication.refWatcher;
-    }
 
 
 //    @Override
