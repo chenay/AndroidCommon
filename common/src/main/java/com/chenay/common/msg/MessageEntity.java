@@ -1,6 +1,7 @@
 package com.chenay.common.msg;
 
-import android.support.annotation.Keep;
+
+import androidx.annotation.Keep;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

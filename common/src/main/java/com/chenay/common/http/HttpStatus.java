@@ -6,7 +6,7 @@
 package com.chenay.common.http;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public enum HttpStatus {
     CONTINUE(100, "Continue"),

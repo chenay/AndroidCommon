@@ -1,7 +1,7 @@
 //package com.chenay.common.mvvm.model;
 //
 //import android.arch.lifecycle.ViewModelProviders;
-//import android.support.v4.app.Fragment;
+//import androidx.fragment.app.Fragment;
 //import android.support.v4.app.FragmentActivity;
 //
 //import java.util.Map;

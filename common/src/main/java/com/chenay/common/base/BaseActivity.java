@@ -1,11 +1,14 @@
 package com.chenay.common.base;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author Y.Chen5

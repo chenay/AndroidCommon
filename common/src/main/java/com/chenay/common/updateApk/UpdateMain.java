@@ -14,7 +14,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.FileProvider;
+
 import android.widget.Toast;
 
 import com.chenay.common.thread.ThreadPoolUtil;
@@ -36,6 +36,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static com.chenay.common.updateApk.HttpDownload.DOWN_SUCESS;
 import static com.chenay.common.updateApk.HttpDownload.DO_NOT_VERIFY;
+
+import androidx.core.content.FileProvider;
 
 /**
  * Created by Chenay on 2016/5/23.

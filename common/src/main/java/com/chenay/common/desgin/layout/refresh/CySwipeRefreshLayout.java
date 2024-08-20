@@ -3,10 +3,6 @@ package com.chenay.common.desgin.layout.refresh;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -17,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.OverScroller;
 import android.widget.ScrollView;
+
+import androidx.core.view.GestureDetectorCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chenay.common.R;
 

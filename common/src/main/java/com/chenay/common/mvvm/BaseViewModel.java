@@ -1,6 +1,7 @@
 package com.chenay.common.mvvm;
 
-import android.arch.lifecycle.ViewModel;
+
+import androidx.lifecycle.ViewModel;
 
 /**
  * @author Y.Chen5

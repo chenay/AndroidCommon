@@ -3,7 +3,6 @@ package com.chenay.common.desgin.spinner;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+
+import androidx.annotation.Nullable;
 
 import com.chenay.common.R;
 import com.chenay.common.desgin.popup.ChyBasePopupWindow;

@@ -1,13 +1,14 @@
 package com.chenay.common.base;
 
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+
+import androidx.databinding.ViewDataBinding;
 
 import com.chenay.common.R;
 

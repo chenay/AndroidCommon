@@ -3,7 +3,7 @@ package com.chenay.common.mvp.model;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.chenay.common.mvp.factory.IMvpPresenterFactory;

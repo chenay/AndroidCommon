@@ -2,8 +2,9 @@ package com.chenay.common.mvp.model;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
+
+
+import androidx.annotation.Nullable;
 
 import com.chenay.common.mvp.factory.IMvpPresenterFactory;
 import com.chenay.common.mvp.factory.IMvpPresenterFactoryImpl;
@@ -11,6 +12,7 @@ import com.chenay.common.mvp.presenter.IMvpBasePresenterN;
 import com.chenay.common.mvp.proxy.IMvpBaseProxy;
 import com.chenay.common.mvp.proxy.IMvpPresenterProxyInterface;
 import com.chenay.common.mvp.view.IMvpBaseView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 /**
  * Created by Y.Chen5 on 1/8/2018.

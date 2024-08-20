@@ -2,7 +2,7 @@ package com.chenay.common.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.io.ObjectStreamException;
 import java.util.HashSet;

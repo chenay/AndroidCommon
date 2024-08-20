@@ -1,11 +1,12 @@
 package com.chenay.common.desgin.refresh;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AbsListView;
+
+import androidx.core.view.ViewCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Created by Y.Chen5 on 7/16/2018.

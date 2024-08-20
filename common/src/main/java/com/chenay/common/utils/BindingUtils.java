@@ -1,16 +1,17 @@
 package com.chenay.common.utils;
 
-import android.databinding.BindingAdapter;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
+import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.chenay.common.desgin.recycleView.OnItemClickListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 //import com.facebook.drawee.view.SimpleDraweeView;
 
 

@@ -1,7 +1,7 @@
 package com.chenay.common.mvp.model;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.webkit.WebViewFragment;
 
 import com.chenay.common.mvp.factory.IMvpPresenterFactory;

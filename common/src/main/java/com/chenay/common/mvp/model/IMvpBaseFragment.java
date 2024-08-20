@@ -2,8 +2,9 @@ package com.chenay.common.mvp.model;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.chenay.common.mvp.factory.IMvpPresenterFactory;
 import com.chenay.common.mvp.factory.IMvpPresenterFactoryImpl;

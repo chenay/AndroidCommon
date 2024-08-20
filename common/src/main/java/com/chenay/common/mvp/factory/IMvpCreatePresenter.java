@@ -1,6 +1,7 @@
 package com.chenay.common.mvp.factory;
 
-import android.support.annotation.Keep;
+
+import androidx.annotation.Keep;
 
 import com.chenay.common.mvp.presenter.IMvpBasePresenterN;
 

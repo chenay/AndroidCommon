@@ -1,7 +1,8 @@
 package com.chenay.common.desgin.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 添加item监听器

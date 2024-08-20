@@ -3,8 +3,8 @@ package com.chenay.common.mvp.model;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+
 import android.util.Log;
 
 import com.chenay.common.base.BaseActivity;

@@ -4,8 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TimeLineItemDecoration  extends RecyclerView.ItemDecoration {
     private int mCircleSize = 14;//圆圈的半径
