@@ -1,6 +1,7 @@
 package com.chenay.common.retrofit.encryption.test;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.util.Log;
 
 import com.chenay.common.http.HttpHeaders;
@@ -83,7 +84,9 @@ public class TestGsonConverterFactory extends Converter.Factory {
 //            adapter = gson.getAdapter(TypeToken.get(type));
             final TypeToken<?> type1 = TypeToken.get(type);
             adapter = gson.getAdapter(type1);
-            Log.d(TAG, "responseBodyConverter: " + type1.getType().getTypeName());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                Log.d(TAG, "responseBodyConverter: " + type1.getType().getTypeName());
+            }
             return new TestGsonResponseBodyConverter<>(gson, adapter);
         } catch (Exception e) {
             e.printStackTrace();

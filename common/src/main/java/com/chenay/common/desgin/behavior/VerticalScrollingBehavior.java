@@ -39,7 +39,7 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ScrollDirection.SCROLL_DIRECTION_UP, ScrollDirection.SCROLL_DIRECTION_DOWN})
+    @IntDef({ScrollDirection.SCROLL_DIRECTION_UP, ScrollDirection.SCROLL_DIRECTION_DOWN, ScrollDirection.SCROLL_NONE})
     public @interface ScrollDirection {
         int SCROLL_DIRECTION_UP = 1;
         int SCROLL_DIRECTION_DOWN = -1;
