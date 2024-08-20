@@ -1,11 +1,10 @@
 package com.chenay.common.base;
 
-import com.alibaba.android.arouter.utils.Consts;
 
 public interface ILogger {
     boolean isShowLog = false;
     boolean isShowStackTrace = false;
-    String defaultTag = Consts.TAG;
+    String defaultTag ="ILogger";
 
     void showLog(boolean isShowLog);
 

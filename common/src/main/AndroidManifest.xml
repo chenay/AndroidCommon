@@ -14,23 +14,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".test.CommonTestActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--            </intent-filter>-->
-        </activity>
-        <activity android:name=".base.SchemeFilterActivity" android:exported="true">
-
-            <!-- Schame -->
             <intent-filter>
-                <data
-                    android:host="com.tti.platform"
-                    android:scheme="arouter"/>
-
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

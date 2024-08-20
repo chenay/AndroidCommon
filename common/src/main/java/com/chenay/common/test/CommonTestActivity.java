@@ -124,7 +124,7 @@ public class CommonTestActivity extends AppCompatActivity {
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
 
             return bitmap;
-        } catch (WriterException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

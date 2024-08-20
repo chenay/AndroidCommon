@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.apkfuns.logutils.LogUtils;
 import com.chenay.common.storage.PreferenceUtil;
 import com.chenay.common.thread.ThreadPoolUtil;
 import com.chenay.common.utils.AlertMediaUtil;
@@ -38,12 +37,6 @@ public class BaseApplication extends Application {
 //        for (ApplicationDelegate delegate : mAppDelegateList) {
 //            delegate.onCreate();
 //        }
-
-        LogUtils.getLogConfig()
-                .configAllowLog(true)
-                .configTagPrefix("tti")
-                .configShowBorders(true)
-                .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}");
 
         ThreadPoolUtil.initThreadPool();
         AlertMediaUtil.initAll(this);

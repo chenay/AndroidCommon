@@ -103,7 +103,7 @@ public class QRUtils {
             bitmap.setPixels(pixels, 0, qrWidth, 0, 0, qrWidth, qrHeight);
 
             return bitmap;
-        } catch (WriterException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

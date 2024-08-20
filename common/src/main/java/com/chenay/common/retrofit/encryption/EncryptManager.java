@@ -3,9 +3,9 @@ package com.chenay.common.retrofit.encryption;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.alibaba.android.arouter.facade.template.ILogger;
 
-import com.alibaba.android.arouter.utils.DefaultLogger;
+import com.chenay.common.base.ILogger;
+import com.chenay.common.utils.DefaultLogger;
 
 import java.io.ObjectStreamException;
 import java.io.UnsupportedEncodingException;
